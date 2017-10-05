@@ -1,65 +1,57 @@
 #!/usr/bin/php
 <?PHP
 
-function epur_str($str)
-{
-	$tab1 = explode(' ', $str);
-	foreach ($tab1 as $word)
-	{
-		if (!empty($word))
-			$ret .= $word." ";
-	}
-	$ret = trim($ret);
-	return $ret;
-}
-
 function is_alnum($c)
 {
-if (($c >= 48 && $c <= 57) || ($c >= 65 && $c <= 90) || ($c >= 97 && $c <= 122))
-	return 1;
-return 0;
+	if (($c >= 48 && $c <= 57) || ($c >= 65 && $c <= 90) || ($c >= 97 && $c <= 122))
+		return 1;
+	return 0;
+}
+
+function is_num($c)
+{
+	if ($c >= 48 && $c <= 57)
+		return 1;
+	return 0;
 }
 
 $i = 1;
 while ($i < $argc)
 {
-	$tab[] = epur_str($argv[$i]);
+	$tab[] = trim(preg_replace("/ +/", " ", quotemeta($argv[$i])));
 	$i++;
 }
 
-$final = array();
+$mid = array();
 foreach($tab as $s)
 {
-	if (strpos($s, " "))
-		$final = array_merge($final, explode(" ", $s));
+	if (strpos(quotemeta($s), " "))
+		$mid = array_merge($mid, explode(" ", $s));
 	else
-		$final[] = $s;
-}
-print_r($final);
-
-$i = 0;
-while ($final[$i])
-{
-	print($final[$i]."\n");
-	print(is_alnum($final)."\n");
-	// if (!is_alnum($final[0][$i]))
-	// {
-	// 	$sym[] = $final[$i];
-	// 	$tmp = $final;
-	// 	array_splice($final, $i, count($final), $tmp[$i + 1]);
-	// }
-	$i++;
+		$mid[] = $s;
 }
 
-print_r($final);
-print_r($sym);
-
-sort($final, SORT_FLAG_CASE OR SORT_NATURAL);
-
-$j = 0;
-while ($final[$j])
+$sym = array();
+$alnum = array();
+foreach ($mid as $str) #separate alnum & meta
 {
-	print $final[$j++].PHP_EOL;
+	is_alnum(ord($str)) ? $alnum[] = $str : $sym[] = $str;
+}
+
+$al = array();
+$num = array();
+foreach ($alnum as $ascii) #separate alpha & numeric
+{
+	is_num(ord($ascii)) ? $num[] = $ascii : $al[] = $ascii;
+}
+
+sort($num, SORT_STRING);
+natcasesort($al);
+$final = array_merge($al, $num, $sym);
+
+foreach ($final as $d) #display
+{
+	print("$d\n");
 }
 
 ?>
