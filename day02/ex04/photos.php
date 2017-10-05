@@ -1,58 +1,75 @@
 #!/usr/bin/php
 <?PHP
 
-function get_img($url, $saveto)
+function get_full_html($url)
 {
 	$ch = curl_init($url);
-	curl_setopt($ch, CURLOPT_HEADER, 0);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
-	$raw = curl_exec($ch);
+	$html = curl_exec($ch);
 	curl_close($ch);
-	if (file_exists($saveto))
-		unlink($saveto);
-	$fd = fopen($saveto, 'x');
-	fwrite($fd, $raw);
-	fclose($fd);
+	return $html;
 }
 
-if (isset($argv[1]))
+function create_dir($url)
 {
+	$url = preg_replace("/^.*?:\/\//", '', $url);
+	if (file_exists($url) && is_dir($url))
+		exit();
+	mkdir($url);
+	return ($url);
+}
+
+function get_name($img)
+{
+	preg_match("/^.*?([^\/]+)$/", $img, $matches);
+	if (substr($matches[1], -1) === "\"" || substr($matches[1], -1) === "'")
+		return (substr($matches[1], 0, -1));
+	return ($matches[1]);
+}
+
+function get_img($imgs, $dir)
+{
+	foreach ($imgs[1] as $img)
+	{
+		$ch = curl_init($img);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+		$raw = curl_exec($ch);
+		curl_close($ch);
+		$fd = fopen($dir."/".get_name($img), 'x');
+		fwrite($fd, $raw);
+		fclose($fd);
+	}
+}
+
+function name_img($html, $url)
+{
+	preg_match_all("/<img[^>]+src=([^\s>]+)/i", $html, $matches);
+	foreach ($matches[1] as $k => $v)
+	{
+		$matches[1][$k] = trim($v, "\"");
+		if (!preg_match("/^http(s?):\/\//", $matches[1][$k]))
+		{
+			preg_match("/^(http(s?):\/\/)([^\/]+)/", $url, $urlMatches);
+			$matches[1][$k] = $urlMatches[1]."".$urlMatches[3]."".$matches[1][$k];
+		}
+		else
+			$matches[1][$k] = $url."".$matches[1][$k];
+	}
+	return ($matches);
+}
+
+if ($argc > 1)
+{
+	$html = get_full_html($argv[1]);
 	$url = $argv[1];
-	$ch = curl_init($url);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	$s = curl_exec($ch);
-	curl_close($ch);
-	$pattern = "/<img src=\"([^\"]*)\"/";
-	preg_match_all($pattern, $s, $matches);
-	$matches = $matches[1];
-	if (isset($matches))
+	if (!empty($html))
 	{
-		# create dir
+		$imgs = name_img($html, $url);
+		$dir = create_dir($url);
+		get_img($imgs, $dir);
 	}
-
-	$pattern = "/(http[s]?:\/\/[^\/]*\/|^\/)/";
-	foreach ($matches as $str)
-	{
-		$path[] = $url."/".preg_replace($pattern, "", $str);
-	}
-	$pattern1 = "/(http[s]?:\/\/)/";
-
-	$dir = preg_replace($pattern1, "", $url);
-	print $dir.PHP_EOL;
-	foreach ($path as $img)
-	{
-		preg_match_all("/([^\/]*$)/", $img, $match);
-		$name[] = $match[0][0];
-	}
-	print_r($name);
-
-	foreach ($path as $key => $file)
-	{
-		print ($dir."/".$name[$key].PHP_EOL);
-		// get_img($img, $dir."/".$name[$key]);
-	}
-
 }
 
 ?>

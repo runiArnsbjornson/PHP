@@ -15,7 +15,7 @@ function getbetweenquote($s)
 	return $matches[1];
 }
 
-if (argc > 1)
+if (argc > 1 && file_exists($argv[1]))
 {
 	$fd = fopen($argv[1], 'r');
 	if ($fd === false)

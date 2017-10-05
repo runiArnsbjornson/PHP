@@ -25,13 +25,13 @@ if (isset($argv[1]))
 			W_F();
 		$i++;
 	}
-	if (!preg_match("/([Ll]undi|[mM]ardi|[mM]ercredi|[jJ]eudi|[vV]endredi|[sS]amedi|[dD]imanche)/", $tab[0]))
+	if (preg_match("/([Ll]undi|[mM]ardi|[mM]ercredi|[jJ]eudi|[vV]endredi|[sS]amedi|[dD]imanche)/", $tab[0]) === 0)
 		W_F();
-	if (!preg_match("/(0[1-9]|[1-2][0-9]|3[0-1])/", $tab[1]))
+	if (preg_match("/(0[1-9]|[1-2][0-9]|3[0-1])/", $tab[1]) === 0)
 		W_F();
-	if (!preg_match("/[0-9]{4}/", $tab[3]))
+	if (preg_match("/[0-9]{4}/", $tab[3]) === 0)
 		W_F();
-	if (!preg_match("/(0[1-9]|1[0-9]|2[0-3]):(0[1-9]|[1-4][0-9]|5[0-9]):(0[1-9]|[1-4][0-9]|5[0-9])/", $tab[4]))
+	if (preg_match("/(0[1-9]|1[0-9]|2[0-3]):(0[1-9]|[1-4][0-9]|5[0-9]):(0[1-9]|[1-4][0-9]|5[0-9])/", $tab[4]) === 0)
 		W_F();
 	$tab[2] = preg_replace($mois, $month, $tab[2]);
 	if (empty($tab[2]))
