@@ -16,36 +16,24 @@ Class Color {
 	function getBlue() { return ($this->blue); }
 
 	function setRed($c) {
-		if (intval($c) > 255)
-			$this->red = 255;
-		else if (intval($c) < 0)
-			$this->red = 0;
-		else
 			$this->red = $c;
 	}
 
 	function setGreen($c) {
-		if (intval($c) > 255)
-			$this->green = 255;
-		else if (intval($c) < 0)
-			$this->green = 0;
-		else
 			$this->green = $c;
 	}
 
 	function setBlue($c) {
-		if (intval($c) > 255)
-			$this->blue = 255;
-		else if (intval($c) < 0)
-			$this->blue = 0;
-		else
 			$this->blue = $c;;
 	}
 
 	function __construct(array $kwargs) {
-		$this->setRed($kwargs['red']);
-		$this->setGreen($kwargs['green']);
-		$this->setBlue($kwargs['blue']);
+		if (array_key_exists('red', $kwargs))
+			$this->setRed($kwargs['red']);
+		if (array_key_exists('green', $kwargs))
+			$this->setGreen($kwargs['green']);
+		if (array_key_exists('blue', $kwargs))
+			$this->setBlue($kwargs['blue']);
 		if (array_key_exists('rgb', $kwargs)) {
 			$this->red = ($kwargs['rgb'] >> 16) & 0xff;
 			$this->green = ($kwargs['rgb'] >> 8) & 0xff;
