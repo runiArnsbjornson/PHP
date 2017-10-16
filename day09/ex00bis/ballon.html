@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script
+src="https://code.jquery.com/jquery-3.2.1.js"
+integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<div id="ball" style='width: 200px; height: 200px; background: red; border-radius: 100%;'>
+		</div>
+		<script type="text/javascript">
+var ball = $('#ball');
+ball.click(function(){blow()});
+ball.mouseout(function(){reduce()});
+
+function color() {
+	if (ball.css('backgroundColor') == 'rgb(255, 0, 0)')
+		ball.css('backgroundColor', 'rgb(0, 128, 0)');
+	else if (ball.css('backgroundColor') == 'rgb(0, 128, 0)')
+		ball.css('backgroundColor', 'rgb(0, 0, 255)');
+	else
+		ball.css('backgroundColor', 'rgb(255, 0, 0)');
+}
+
+function invcolor() {
+	if (ball.css('backgroundColor') == 'rgb(255, 0, 0)')
+		ball.css('backgroundColor', 'rgb(0, 0, 255)');
+	else if (ball.css('backgroundColor') == 'rgb(0, 0, 255)')
+		ball.css('backgroundColor', 'rgb(0, 128, 0)');
+	else
+		ball.css('backgroundColor', 'rgb(255, 0, 0)');
+}
+
+function blow() {
+	var x = parseInt(ball.css('width'));
+	if (x < 420)
+	{
+		x += 10;
+		ball.css('width', x+'px');
+		ball.css('height', x+'px');
+	}
+	else
+	{
+		ball.css('width', '200px');
+		ball.css('height', '200px');
+	}
+	color();
+}
+
+function reduce() {
+	var x = parseInt(ball.css('width'));
+	if (x > 200)
+	{
+		x -= 5;
+		ball.css('width', x+'px');
+		ball.css('height', x+'px');
+	}
+	invcolor();
+}
+		</script>
+	</body>
+</html>

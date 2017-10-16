@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="ballon" onclick="blow()" onmouseout='reduce()' style='width: 200px; height: 200px; background: red; border-radius: 100%;'>
+		
+	</div>
+	<script type="text/javascript">
+		function color() {
+			if (document.getElementById('ballon').style.backgroundColor == 'red')
+				document.getElementById('ballon').style.backgroundColor = 'green';
+			else if (document.getElementById('ballon').style.backgroundColor == 'green')
+				document.getElementById('ballon').style.backgroundColor = 'blue';
+			else
+				document.getElementById('ballon').style.backgroundColor = 'red';
+		}
+
+		function blow() {
+			var x = parseInt(document.getElementById('ballon').style.width);
+			if (x < 420)
+			{
+				x += 10;
+				document.getElementById('ballon').style.width = x+'px';
+				document.getElementById('ballon').style.height = x+'px';
+			}
+			else
+			{
+				document.getElementById('ballon').style.width = '200px';
+				document.getElementById('ballon').style.height = '200px';
+			}
+			color();
+		}
+
+		function reduce()
+		{
+			var x = parseInt(document.getElementById('ballon').style.width);
+			if (x > 200)
+			{
+				x -= 5;
+				document.getElementById('ballon').style.width = x+'px';
+				document.getElementById('ballon').style.height = x+'px';
+			}
+			if (document.getElementById('ballon').style.backgroundColor == 'red')
+				document.getElementById('ballon').style.backgroundColor = 'blue';
+			else if (document.getElementById('ballon').style.backgroundColor == 'blue')
+				document.getElementById('ballon').style.backgroundColor = 'green';
+			else
+				document.getElementById('ballon').style.backgroundColor = 'red';
+
+		}
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script
+src="https://code.jquery.com/jquery-3.2.1.js"
+integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+crossorigin="anonymous"></script>
+</head>
+<body>
+	<form>
+	<input type='text' id='left'>
+	<select id='op'>
+		<option value='add'>+</option>
+		<option value='sub'>-</option>
+		<option value='mul'>*</option>
+		<option value='div'>/</option>
+		<option value='mod'>%</option>
+	</select>
+	<input type='text' id='right'>
+	<input type='submit' value='Try me!' id='do'>
+	</form>
+	<script type="text/javascript">
+		$(document).ready(function(){use()})
+		$('#do').click(function(){calc()});
+
+		function use() {
+			setInterval(function (){alert('Please, use me...')}, 30000);
+		}
+
+		function add(l, r) {
+			return (l + r);
+		}
+
+		function sub(l, r) {
+			return (l - r);
+		}
+
+		function mul(l, r) {
+			return (l * r);
+		}
+
+		function div() {
+			return (l / r);
+		}
+
+		function mod() {
+			return (l % r);
+		}
+
+		function calc() {
+			var l = parseInt($('#left').val());
+			var op = $('#op').val();
+			var r = parseInt($('#right').val());
+			var a;
+			if (l < 0 || r < 0 || isNaN(l) || isNaN(r))
+				a = 'Error :(';
+			else
+			{
+				switch (op) {
+					case 'add':
+						a = add(l, r);
+						break;
+
+					case 'sub':
+						a = sub(l, r);
+						break;
+
+					case 'mul':
+						a = mul(l, r);
+						break;
+
+					case 'div':
+						if (r === 0)
+							a = "It’s over 9000!";
+						else
+							a = div(l, r);
+						break;
+
+					case 'mod':
+						if (r === 0)
+							a = "It’s over 9000!";
+						else
+							a = mod(l, r);
+						break;
+
+					default:
+						a = 'tu me petes les couilles';
+				}
+				console.log(a);
+			}
+			alert(a);
+		}
+	</script>
+</body>
+</html>

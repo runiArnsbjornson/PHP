@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To do List by jdebladi</title>
+	<script type="text/javascript" src="todo.js"></script>
+	<style> 
+body {
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ flex-direction:column;
+}
+
+	.todo {
+font-family: "Lucida Console", Monaco, monospace; 
+background: linear-gradient(to bottom right, aliceblue, skyblue); 
+border-radius: 15px; 
+min-height: 30px; 
+min-width: 500px; 
+max-width: 100%;
+margin-bottom:5px; 
+justify-content:center; 
+display: flex; 
+align-items: center;
+}
+
+	.todo:hover {
+background: linear-gradient(to bottom right, goldenrod, coral); 
+}
+
+	button.new{
+ margin-bottom:5px; 
+ justify-content:center;
+ display: flex;
+ align-items: center;
+ border:1px solid #8A66F4;
+ -webkit-box-shadow: #CCCCCC 0px 1px 0px inset;
+ -moz-box-shadow: #CCCCCC 0px 1px 0px inset;
+ box-shadow: #CCCCCC 0px 1px 0px inset;
+ -webkit-border-radius: 5px;
+ -moz-border-radius: 5px;
+ border-radius: 5px;
+ font-size:15px;
+ font-family:trebuchet MS, sans-serif; padding: 10px 10px 10px 10px; 
+ text-decoration:none;
+ text-shadow: -1px -1px 0 rgba(0,0,0,0.3); color: #000000;
+ background-color: #F8C19C; background-image: -webkit-gradient(linear, left top, left bottom, from(#F8C19C), to(#ED865A));
+ background-image: -webkit-linear-gradient(top, #F8C19C, #ED865A);
+ background-image: -moz-linear-gradient(top, #F8C19C, #ED865A);
+ background-image: -ms-linear-gradient(top, #F8C19C, #ED865A);
+ background-image: -o-linear-gradient(top, #F8C19C, #ED865A);
+ background-image: linear-gradient(to bottom, #F8C19C, #ED865A);
+}
+
+	button.new:hover{
+ border:1px solid #9174ED;
+ background-color: #ED865A; background-image: -webkit-gradient(linear, left top, left bottom, from(#ED865A), to(#ED6A42));
+ background-image: -webkit-linear-gradient(top, #ED865A, #ED6A42);
+ background-image: -moz-linear-gradient(top, #ED865A, #ED6A42);
+ background-image: -ms-linear-gradient(top, #ED865A, #ED6A42);
+ background-image: -o-linear-gradient(top, #ED865A, #ED6A42);
+ background-image: linear-gradient(to bottom, #ED865A, #ED6A42);
+}
+</style>
+</head>
+<body onunload="store()">
+	<button class='new' id='New' onclick="add()">New</button>
+	<div id='ft_list'>
+	</div>
+	<script type="text/javascript">check()</script>
+</body>
+</html>
